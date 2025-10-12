@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coffee Shop - Freshly Roasted Coffee</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .hero-bg {
+            background: linear-gradient(135deg, #2c1810 0%, #4a3728 50%, #6b4e37 100%);
+        }
+        
+        .wave-shape {
+            background: #f59e0b;
+            clip-path: ellipse(100% 100% at 50% 0%);
+        }
+        
+        .floating {
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+        
+        .fade-in {
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .btn-hover {
+            transition: all 0.3s ease;
+        }
+        
+        .btn-hover:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(245, 158, 11, 0.4);
+        }
+        
+        .mobile-menu {
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+        }
+        
+        .mobile-menu.active {
+            transform: translateX(0);
+        }
+        
+        .overlay {
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(2px);
+        }
+        
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .coffee-pattern {
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23f59e0b' fill-opacity='0.1'%3E%3Ccircle cx='30' cy='30' r='4'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+    </style>
+</head>
+<body class="bg-gray-50 overflow-x-hidden">
+    <!-- Navigation -->
+    <nav class="relative z-50 bg-white shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <div class="h-10 w-10 bg-amber-500 rounded-full flex items-center justify-center">
+                            <i class="fas fa-coffee text-white text-lg"></i>
+                        </div>
+                    </div>
+                    <div class="ml-3">
+                        <h1 class="text-xl font-bold text-gray-800">Coffee Shop</h1>
+                    </div>
+                </div>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-8">
+                        <a href="#" class="text-gray-700 hover:text-amber-600 px-3 py-2 text-sm font-medium transition-colors duration-300">Home</a>
+                        <a href="#menu" class="text-gray-700 hover:text-amber-600 px-3 py-2 text-sm font-medium transition-colors duration-300">Menu</a>
+                        <a href="#blog" class="text-gray-700 hover:text-amber-600 px-3 py-2 text-sm font-medium transition-colors duration-300">Blog</a>
+                        <a href="#" class="text-gray-700 hover:text-amber-600 px-3 py-2 text-sm font-medium transition-colors duration-300">Media</a>
+                        <a href="#" class="text-gray-700 hover:text-amber-600 px-3 py-2 text-sm font-medium transition-colors duration-300">Contact</a>
+                    </div>
+                </div>
+
+                <!-- Search and Mobile Menu Button -->
+                <div class="flex items-center space-x-4">
+                    <button class="text-gray-700 hover:text-amber-600 transition-colors duration-300">
+                        <i class="fas fa-search text-lg"></i>
+                    </button>
+                    <button onclick="toggleMobileMenu()" class="md:hidden text-gray-700 hover:text-amber-600 transition-colors duration-300">
+                        <i class="fas fa-bars text-lg"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="mobile-menu fixed top-0 right-0 h-full w-64 bg-white shadow-xl z-50 md:hidden">
+            <div class="p-4">
+                <button onclick="toggleMobileMenu()" class="float-right text-gray-700 hover:text-amber-600 transition-colors duration-300">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+                <div class="clear-both mt-8 space-y-4">
+                    <a href="#" class="block text-gray-700 hover:text-amber-600 py-2 text-sm font-medium transition-colors duration-300">Home</a>
+                    <a href="#menu" class="block text-gray-700 hover:text-amber-600 py-2 text-sm font-medium transition-colors duration-300">Menu</a>
+                    <a href="#blog" class="block text-gray-700 hover:text-amber-600 py-2 text-sm font-medium transition-colors duration-300">Blog</a>
+                    <a href="#" class="block text-gray-700 hover:text-amber-600 py-2 text-sm font-medium transition-colors duration-300">Media</a>
+                    <a href="#" class="block text-gray-700 hover:text-amber-600 py-2 text-sm font-medium transition-colors duration-300">Contact</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-bg relative overflow-hidden coffee-pattern">
+        <div class="relative z-10 min-h-screen flex items-center">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                    <!-- Left Content -->
+                    <div class="text-center lg:text-left space-y-6 fade-in">
+                        <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight">
+                            FRESHLY ROASTED<br>
+                            <span class="text-amber-400">COFFEE</span>
+                        </h1>
+                        <p class="text-gray-300 text-lg max-w-md mx-auto lg:mx-0">
+                            Experience the perfect blend of rich flavor and aromatic excellence in every cup.
+                        </p>
+                        <button class="bg-amber-500 hover:bg-amber-600 text-white px-8 py-3 rounded-full font-semibold btn-hover">
+                            View Menu
+                        </button>
+                    </div>
+
+                    <!-- Right Content - Coffee Cup -->
+                    <div class="flex justify-center lg:justify-end">
+                        <div class="relative floating">
+                            <div class="w-80 h-80 md:w-96 md:h-96 bg-gradient-to-br from-amber-800 to-amber-600 rounded-full shadow-2xl flex items-center justify-center">
+                                <i class="fas fa-coffee text-white text-8xl opacity-80"></i>
+                            </div>
+                            <!-- Coffee Beans Decoration -->
+                            <div class="absolute -top-10 -left-10 w-20 h-20 bg-amber-600 rounded-full flex items-center justify-center opacity-80">
+                                <i class="fas fa-seedling text-white text-2xl"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Wave Shape -->
+        <div class="wave-shape absolute bottom-0 left-0 w-full h-32"></div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="bg-amber-50 relative z-10">
+        <!-- Top Categories -->
+        <section id="menu" class="py-16 px-4 sm:px-6 lg:px-8">
+            <div class="max-w-7xl mx-auto">
+                <div class="text-center mb-12 fade-in">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">TOP CATEGORIES</h2>
+                    <p class="text-gray-600">Explore The Recent Most Bought Drinks This Week</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- Coffee Mocha -->
+                    <div class="card-hover bg-white rounded-2xl overflow-hidden shadow-lg fade-in">
+                        <div class="relative h-48 bg-gradient-to-br from-amber-900 to-amber-700">
+                            <div class="overlay absolute inset-0 flex items-center justify-center">
+                                <div class="text-center text-white">
+                                    <i class="fas fa-coffee text-4xl mb-4"></i>
+                                    <h3 class="text-2xl font-bold mb-2">Coffee Mocha</h3>
+                                    <button class="bg-amber-500 hover:bg-amber-600 text-white px-6 py-2 rounded-full transition-colors duration-300 btn-hover">
+                                        View Menu
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Espresso Americano -->
+                    <div class="card-hover bg-white rounded-2xl overflow-hidden shadow-lg fade-in" style="animation-delay: 0.2s;">
+                        <div class="relative h-48 bg-gradient-to-br from-gray-800 to-gray-600">
+                            <div class="overlay absolute inset-0 flex items-center justify-center">
+                                <div class="text-center text-white">
+                                    <i class="fas fa-fire text-4xl mb-4"></i>
+                                    <h3 class="text-2xl font-bold mb-2">Espresso Americano</h3>
+                                    <button class="bg-amber-500 hover:bg-amber-600 text-white px-6 py-2 rounded-full transition-colors duration-300 btn-hover">
+                                        View Menu
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Cappuccino -->
+                    <div class="card-hover bg-white rounded-2xl overflow-hidden shadow-lg fade-in" style="animation-delay: 0.4s;">
+                        <div class="relative h-48 bg-gradient-to-br from-amber-800 to-amber-500">
+                            <div class="overlay absolute inset-0 flex items-center justify-center">
+                                <div class="text-center text-white">
+                                    <i class="fas fa-mug-hot text-4xl mb-4"></i>
+                                    <h3 class="text-2xl font-bold mb-2">Cappuccino</h3>
+                                    <button class="bg-amber-500 hover:bg-amber-600 text-white px-6 py-2 rounded-full transition-colors duration-300 btn-hover">
+                                        View Menu
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Top Milk Shakes -->
+        <section class="py-16 px-4 sm:px-6 lg:px-8">
+            <div class="max-w-7xl mx-auto">
+                <div class="text-center mb-12 fade-in">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">TOP MILK SHAKES</h2>
+                    <p class="text-gray-600">Explore The Recent Most Bought Shakes This Week</p>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <!-- Mocha Shake -->
+                    <div class="card-hover bg-white rounded-2xl p-6 text-center shadow-lg fade-in">
+                        <div class="relative mb-4">
+                            <div class="w-32 h-40 mx-auto bg-gradient-to-b from-amber-600 to-amber-800 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-glass-whiskey text-white text-3xl"></i>
+                            </div>
+                            <div class="absolute top-2 left-2 bg-amber-500 text-white px-2 py-1 rounded-full text-xs">
+                                <i class="fas fa-star"></i> 4.8
+                            </div>
+                        </div>
+                        <h3 class="text-lg font-semibold text-gray-800 mb-2">Mocha Shake</h3>
+                        <p class="text-2xl font-bold text-amber-600 mb-4">$20.00</p>
+                        <button onclick="addToCart(this)" class="bg-amber-500 hover:bg-amber-600 text-white px-4 py-2 rounded-full text-sm transition-colors duration-300 btn-hover">
+                            Add to Cart
+                        </button>
+                    </div>
+
+                    <!-- Lavender Shake -->
+                    <div class="card-hover bg-white rounded-2xl p-6 text-center shadow-lg fade-in" style="animation-delay: 0.2s;">
+                        <div class="relative mb-4">
+                            <div class="w-32 h-40 mx-auto bg-gradient-to-b from-purple-400 to-purple-600 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-wine-glass text-white text-3xl"></i>
+                            </div>
+                            <div class="absolute top-2 left-2 bg-amber-500 text-white px-2 py-1 rounded-full text-xs">
+                                <i class="fas fa-star"></i> 4.6
+                            </div>
+                        </div>
+                        <h3 class="text-lg font-semibold text-gray-800 mb-2">Lavender Shake</h3>
+                        <p class="text-2xl font-bold text-amber-600 mb-4">$18.00</p>
+                        <button onclick="addToCart(this)" class="bg-amber-500 hover:bg-amber-600 text-white px-4 py-2 rounded-full text-sm transition-colors duration-300 btn-hover">
+                            Add to Cart
+                        </button>
+                    </div>
+
+                    <!-- Caramel Shake -->
+                    <div class="card-hover bg-white rounded-2xl p-6 text-center shadow-lg fade-in" style="animation-delay: 0.4s;">
+                        <div class="relative mb-4">
+                            <div class="w-32 h-40 mx-auto bg-gradient-to-b from-yellow-500 to-amber-700 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-cocktail text-white text-3xl"></i>
+                            </div>
+                            <div class="absolute top-2 left-2 bg-amber-500 text-white px-2 py-1 rounded-full text-xs">
+                                <i class="fas fa-star"></i> 4.9
+                            </div>
+                        </div>
+                        <h3 class="text-lg font-semibold text-gray-800 mb-2">Caramel Shake</h3>
+                        <p class="text-2xl font-bold text-amber-600 mb-4">$22.00</p>
+                        <button onclick="addToCart(this)" class="bg-amber-500 hover:bg-amber-600 text-white px-4 py-2 rounded-full text-sm transition-colors duration-300 btn-hover">
+                            Add to Cart
+                        </button>
+                    </div>
+
+                    <!-- Vanilla Shake -->
+                    <div class="card-hover bg-white rounded-2xl p-6 text-center shadow-lg fade-in" style="animation-delay: 0.6s;">
+                        <div class="relative mb-4">
+                            <div class="w-32 h-40 mx-auto bg-gradient-to-b from-yellow-200 to-yellow-400 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-ice-cream text-white text-3xl"></i>
+                            </div>
+                            <div class="absolute top-2 left-2 bg-amber-500 text-white px-2 py-1 rounded-full text-xs">
+                                <i class="fas fa-star"></i> 4.7
+                            </div>
+                        </div>
+                        <h3 class="text-lg font-semibold text-gray-800 mb-2">Vanilla Shake</h3>
+                        <p class="text-2xl font-bold text-amber-600 mb-4">$19.00</p>
+                        <button onclick="addToCart(this)" class="bg-amber-500 hover:bg-amber-600 text-white px-4 py-2 rounded-full text-sm transition-colors duration-300 btn-hover">
+                            Add to Cart
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Latest Blogs -->
+        <section id="blog" class="py-16 px-4 sm:px-6 lg:px-8 bg-white">
+            <div class="max-w-7xl mx-auto">
+                <div class="text-center mb-12 fade-in">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">LATEST BLOGS</h2>
+                    <p class="text-gray-600">Discover Coffee Stories and Expert Tips</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- Blog 1 -->
+                    <div class="card-hover bg-amber-50 rounded-2xl overflow-hidden shadow-lg fade-in">
+                        <div class="h-48 bg-gradient-to-br from-amber-600 to-amber-800 flex items-center justify-center">
+                            <i class="fas fa-coffee text-white text-5xl"></i>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-gray-800 mb-3">Coffee Brewing Mastery</h3>
+                            <p class="text-gray-600 text-sm mb-4">
+                                Discover the art of coffee brewing and learn about different bean varieties from around the world. Master the perfect cup with our expert tips.
+                            </p>
+                            <a href="#" class="text-amber-600 hover:text-amber-700 font-semibold text-sm transition-colors duration-300">
+                                Read More <i class="fas fa-arrow-right ml-1"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Blog 2 -->
+                    <div class="card-hover bg-amber-50 rounded-2xl overflow-hidden shadow-lg fade-in" style="animation-delay: 0.2s;">
+                        <div class="h-48 bg-gradient-to-br from-green-600 to-green-800 flex items-center justify-center">
+                            <i class="fas fa-leaf text-white text-5xl"></i>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-gray-800 mb-3">Sustainable Coffee</h3>
+                            <p class="text-gray-600 text-sm mb-4">
+                                Explore the fascinating journey of coffee from bean to cup. Learn about sustainable farming practices and fair trade coffee production.
+                            </p>
+                            <a href="#" class="text-amber-600 hover:text-amber-700 font-semibold text-sm transition-colors duration-300">
+                                Read More <i class="fas fa-arrow-right ml-1"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Blog 3 -->
+                    <div class="card-hover bg-amber-50 rounded-2xl overflow-hidden shadow-lg fade-in" style="animation-delay: 0.4s;">
+                        <div class="h-48 bg-gradient-to-br from-red-600 to-red-800 flex items-center justify-center">
+                            <i class="fas fa-heart text-white text-5xl"></i>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-gray-800 mb-3">Coffee Tasting Experience</h3>
+                            <p class="text-gray-600 text-sm mb-4">
+                                Join us for an exclusive coffee tasting experience. Discover unique flavor profiles and learn to identify different coffee characteristics.
+                            </p>
+                            <a href="#" class="text-amber-600 hover:text-amber-700 font-semibold text-sm transition-colors duration-300">
+                                Read More <i class="fas fa-arrow-right ml-1"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div class="col-span-1 md:col-span-2">
+                    <div class="flex items-center mb-4">
+                        <div class="h-10 w-10 bg-amber-500 rounded-full flex items-center justify-center mr-3">
+                            <i class="fas fa-coffee text-white text-lg"></i>
+                        </div>
+                        <h3 class="text-xl font-bold">Coffee Shop</h3>
+                    </div>
+                    <p class="text-gray-400 mb-4">Experience the perfect blend of rich flavor and aromatic excellence in every cup.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-amber-500 transition-colors duration-300">
+                            <i class="fab fa-facebook text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-amber-500 transition-colors duration-300">
+                            <i class="fab fa-instagram text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-amber-500 transition-colors duration-300">
+                            <i class="fab fa-twitter text-xl"></i>
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-amber-500 transition-colors duration-300">Home</a></li>
+                        <li><a href="#menu" class="hover:text-amber-500 transition-colors duration-300">Menu</a></li>
+                        <li><a href="#blog" class="hover:text-amber-500 transition-colors duration-300">Blog</a></li>
+                        <li><a href="#" class="hover:text-amber-500 transition-colors duration-300">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Contact Info</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><i class="fas fa-phone mr-2"></i> +1 234 567 890</li>
+                        <li><i class="fas fa-envelope mr-2"></i> info@coffeeshop.com</li>
+                        <li><i class="fas fa-map-marker-alt mr-2"></i> 123 Coffee Street</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center">
+                <p class="text-gray-400">&copy; 2024 Coffee Shop. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Simple mobile menu toggle
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('active');
+        }
+
+        // Simple add to cart function
+        function addToCart(button) {
+            const originalText = button.textContent;
+            button.textContent = 'Added!';
+            button.classList.remove('bg-amber-500', 'hover:bg-amber-600');
+            button.classList.add('bg-green-500', 'hover:bg-green-600');
+            
+            setTimeout(() => {
+                button.textContent = originalText;
+                button.classList.remove('bg-green-500', 'hover:bg-green-600');
+                button.classList.add('bg-amber-500', 'hover:bg-amber-600');
+            }, 2000);
+        }
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(e) {
+            const menu = document.getElementById('mobile-menu');
+            const menuBtn = e.target.closest('[onclick="toggleMobileMenu()"]');
+            
+            if (!menu.contains(e.target) && !menuBtn) {
+                menu.classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html>
