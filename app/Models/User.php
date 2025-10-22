@@ -18,6 +18,7 @@ class User extends Authenticatable
         'role',
         'password',
         'detail_alamat', // Tambahan: detail alamat
+        'status', 
     ];
 
     // Field yang disembunyikan saat array/json

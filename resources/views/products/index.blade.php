@@ -88,7 +88,7 @@
                                 <div class="flex flex-wrap gap-1 mb-2">
                                     @foreach($users->whereIn('id', $product->discount_user_ids) as $u)
                                         <span class="bg-amber-100 text-amber-800 text-xs px-2 py-1 rounded-full border border-amber-200">
-                                            {{ $u->name }}
+                                            {{ $u->name}} 
                                         </span>
                                     @endforeach
                                 </div>
